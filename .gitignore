@@ -1,5 +1,11 @@
 .venv/
+
 PDFMalLyzer/.venv/
 PDFMalLyzer/__pycache__
 PDFMalLyzer/.gitignore
+
 Dataset/
+
+Analysis/.venv/
+
+Model/.venv/
