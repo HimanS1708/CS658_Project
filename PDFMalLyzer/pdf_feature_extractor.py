@@ -49,7 +49,7 @@ def sig_handler(signum, frame):
 md5_vals = []
 for j in os.listdir(path):
         f = path + "/" + j
-        print("[+] Path: {}".format(f))
+        # print("[+] Path: {}".format(f))
         #pdfFileObj = open(f,'rb')
         try:
                 doc = fitz.open(f)
@@ -57,10 +57,10 @@ for j in os.listdir(path):
                 #file = open(f, 'rb')
         except:
                 continue
-        print(doc.embfile_names())
+        # print(doc.embfile_names())
         #metadata
         metadata = doc.metadata
-        print("metadata is "+str(metadata))
+        # print("metadata is "+str(metadata))
 
         #title
         if metadata:
@@ -69,7 +69,7 @@ for j in os.listdir(path):
                 title = ""
         if not title:
                 title = ""
-        print("title is "+str(title))
+        # print("title is "+str(title))
 
         #whether file is encrypted
         isEncrypted = -1
@@ -85,11 +85,11 @@ for j in os.listdir(path):
 
         # printing number of pages in pdf file
         numPages = doc.page_count
-        print("numpages is "+str(numPages))
+        # print("numpages is "+str(numPages))
 
         #extracted text
         pdfsize = int(os.path.getsize(f)/1000)
-        print("pdfsize is "+str(pdfsize))
+        # print("pdfsize is "+str(pdfsize))
 
         #extracted text
         found = "No"
@@ -103,7 +103,8 @@ for j in os.listdir(path):
         except:
          #       break
                  found = "unclear"
-                 res.loc[i] = [pdfsize, len(str(metadata).encode('utf-8'))] + [numPages] + [objects] + [len(title)] + [isEncrypted] + [embedcount] + [-1] + [found] 
+		 embedcount = doc.embfile_count()
+                 res.loc[i] = [pdfsize, len(str(metadata).encode('utf-8'))] + [numPages] + [objects] + [len(title)] + [isEncrypted] + [embedcount] + [-1] + [found] + ['']
                  md5_vals.append(utils.md5sum(f))
                  i +=1
                  continue
@@ -111,7 +112,7 @@ for j in os.listdir(path):
         #print("file contains text " + str(found))
         # number of embedded files
         embedcount = doc.embfile_count()
-        print("embedcount is "+str(embedcount))
+        # print("embedcount is "+str(embedcount))
 
         
         #number of images
@@ -119,7 +120,7 @@ for j in os.listdir(path):
         try:
          for k in range(len(doc)):
                try:
-                print(doc.getPageImageList(k))
+                # print(doc.getPageImageList(k))
                 imgcount = len(doc.getPageImageList(k)) + imgcount
                except:  
                  imgcount = -1

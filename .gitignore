@@ -2,3 +2,4 @@
 PDFMalLyzer/.venv/
 PDFMalLyzer/__pycache__
 PDFMalLyzer/.gitignore
+Dataset/
