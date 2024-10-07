@@ -12,4 +12,6 @@ pip3 install -r requirements.txt
 
 ## Working
 
-The ```pdf_mal.ipynb``` notebook contains the model that is trained and tested on the extracted dataset.
+The ```pdf_mal.ipynb``` notebook contains the model that is trained and tested on the original dataset.
+
+The ```test_1st.ipynb``` notebook contains the model that is trained and tested on our extracted dataset.

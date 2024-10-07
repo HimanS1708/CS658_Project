@@ -24,7 +24,7 @@ For feature extraction from the PDFs, we used the [PDFMalLyzer](https://github.c
 
 ## Models
 
-Currently we are only using the RandomForest model with n_estimators = 50, max_depth = 500 and max_features = log2
+Currently we are only using the RandomForest model with n_estimators = 200, max_depth = 20 and max_features = log2
 
 TODO: Create a stacking learning model as implemented in the paper and try out different base and meta learners.
 
