@@ -1,0 +1,8 @@
+fancyimpute==0.7.0
+ipykernel==6.29.5
+missingno==0.5.2
+pip==24.0
+matplotlib==3.9.2
+pandas==2.2.3
+numpy==1.26.4
+scikit-learn==1.5.2
