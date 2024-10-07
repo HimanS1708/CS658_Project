@@ -81,6 +81,7 @@ for j in os.listdir(path):
                         isEncrypted = 1
         #number of objects
         objects = doc.xref_length()
+        # print("Object is " + str(objects))
                 # print("object is "+str(object))
 
         # printing number of pages in pdf file
@@ -103,7 +104,7 @@ for j in os.listdir(path):
         except:
          #       break
                  found = "unclear"
-		 embedcount = doc.embfile_count()
+                 embedcount = doc.embfile_count()
                  res.loc[i] = [pdfsize, len(str(metadata).encode('utf-8'))] + [numPages] + [objects] + [len(title)] + [isEncrypted] + [embedcount] + [-1] + [found] + ['']
                  md5_vals.append(utils.md5sum(f))
                  i +=1
@@ -120,11 +121,10 @@ for j in os.listdir(path):
         try:
          for k in range(len(doc)):
                try:
-                # print(doc.getPageImageList(k))
-                imgcount = len(doc.getPageImageList(k)) + imgcount
+                print(doc.get_images(k))
+                imgcount = len(doc.get_images(k)) + imgcount
                except:  
-                 imgcount = -1
-                 break
+                      continue
                  
 
         except:
@@ -148,15 +148,27 @@ print("general features extracted successfully...")
 print("extracting structural features...")        #extracting structural features using pdfid
 var =  str(r"tr '\n' ','")
 command = ""
-header =  ['header', 'obj', 'endobj', 'stream', 'endstream', 'xref', 'trailer', 'startxref', 'pageno', 'Encrypt', 'ObjStm', 'JS', 'JavaScript', 'AA', 'OpenAction', 'AcroForm', 'JBIG2Decode', 'RichMedia', 'Launch', 'EmbeddedFile', 'XFA', 'URI', 'Colors']
+header =  ['header', 'obj', 'endobj', 'stream', 'endstream', 'xref', 'trailer', 'startxref', 'pageno', 'Encrypt', 'ObjStm', 'JS', 'JavaScript', 'AA', 'OpenAction', 'AcroForm', 'JBIG2Decode', 'RichMedia', 'Launch', 'EmbeddedFile', 'XFA', 'URI', 'Colors', 'JS_Obfuscated', 'JavaScript_Obfuscated', 'AA_Obfuscated', 'OpenAction_Obfuscated', 'AcroForm_Obfuscated', 'JBIG2Decode_Obfuscated', 'RichMedia_Obfuscated', 'Launch_Obfuscated', 'EmbeddedFile_Obfuscated', 'XFA_Obfuscated', 'pageno_Obfuscated']
 with open(os.path.relpath("pdfid/output.csv"),'w',encoding='UTF8') as output:
         output.write(','.join(header))
         # os.chdir('pdfid')
         t0 = time.time()
         for j in os.listdir(path):
                 f = path + "/" + j
+                try:
+                       doc = fitz.open(f)
+                except:
+                       continue
                 out = utils.pdfid(f)
+                # print("==============================================")
+                # print(out)
+                # print("==============================================")
                 out = list(out.values())
+                # print("==============================================")
+                # print(out[:23])
+                # print("==============================================")
+                print(len(out))
+                print(len(header))
                 out = ','.join(str(o) for o in out)
                 output.write("\n" + out)
                 d = time.time() - t0

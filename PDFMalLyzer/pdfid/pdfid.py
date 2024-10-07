@@ -748,6 +748,7 @@ def MakeCSVLine(fields, separator=';', quote='"'):
 def ProcessFile(filename, options, plugins):
     xmlDoc = PDFiD(filename, options.all, options.extra, options.disarm, options.force)
     if plugins == [] and options.select == '':
+        # print("Hadffjhaksdlgjaksdlghaklsdgjhadsk")
         Print(PDFiD2String(xmlDoc, options.nozero, options.force), options)
         return
 
