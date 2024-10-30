@@ -3,6 +3,7 @@
 PDFMalLyzer/.venv/
 PDFMalLyzer/__pycache__
 PDFMalLyzer/.gitignore
+PDFMalLyzer/extract_test1.ipynb
 
 Dataset/
 

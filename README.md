@@ -24,9 +24,14 @@ For feature extraction from the PDFs, we used the [PDFMalLyzer](https://github.c
 
 ## Models
 
-Currently we are only using the RandomForest model with n_estimators = 200, max_depth = 20 and max_features = log2
+Created a stacking classifier model with MLP, RandomForest and SVM as Base learners and a Logistic Regression model as Meta Learner.
 
-TODO: Create a stacking learning model as implemented in the paper and try out different base and meta learners.
+Hyperparameters used -
+
+* RandomForestClassifier - n_estimators=200, max_depth=20, min_samples_leaf=1, min_samples_split=2, random_state=42
+* MLPClassifier - hidden_layer_sizes=(100,), max_iter=1000, activation='tanh', learning_rate_init=0.001, random_state=42
+* SVC - C=100, kernel='rbf', gamma='scale', probability=True, random_state=42
+* LogisticRegression - random_state=42
 
 ## Team
 

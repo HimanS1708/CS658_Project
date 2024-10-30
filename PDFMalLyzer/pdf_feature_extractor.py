@@ -35,7 +35,7 @@ if(not os.path.isabs(path)):      #if the given path is not absolute, we should 
          path = os.path.join(dir,path)
          print("the path is not absolute and the new path is "+str(path))
 if(os.path.isdir(path)):
-        res = pd.DataFrame(columns=('pdfsize','metadata size', 'pages','xref length','title characters','isEncrypted','embedded files','images','contains text',''))
+        res = pd.DataFrame(columns=('pdfsize','metadata size', 'pages','xref length','title characters','isEncrypted','embedded files','images','contains text'))
 
 else:
         print("specify a valid pdf folder path as an argument")
@@ -105,7 +105,7 @@ for j in os.listdir(path):
          #       break
                  found = "unclear"
                  embedcount = doc.embfile_count()
-                 res.loc[i] = [pdfsize, len(str(metadata).encode('utf-8'))] + [numPages] + [objects] + [len(title)] + [isEncrypted] + [embedcount] + [-1] + [found] + ['']
+                 res.loc[i] = [pdfsize, len(str(metadata).encode('utf-8'))] + [numPages] + [objects] + [len(title)] + [isEncrypted] + [embedcount] + [-1] + [found]
                  md5_vals.append(utils.md5sum(f))
                  i +=1
                  continue
@@ -135,7 +135,7 @@ for j in os.listdir(path):
 
 
         #writing the features in a csv file
-        res.loc[i] = [pdfsize, len(str(metadata).encode('utf-8'))] + [numPages] + [objects] + [len(title)] + [isEncrypted] + [embedcount] + [imgcount] + [found] + ['']
+        res.loc[i] = [pdfsize, len(str(metadata).encode('utf-8'))] + [numPages] + [objects] + [len(title)] + [isEncrypted] + [embedcount] + [imgcount] + [found]
         md5_vals.append(utils.md5sum(f))
         i +=1
 # Change the index of the dataframe
@@ -174,9 +174,45 @@ with open(os.path.relpath("pdfid/output.csv"),'w',encoding='UTF8') as output:
                 d = time.time() - t0
         print("duration: %.2f s." % d)
 
-print("finished features")
-os.system("paste result.csv pdfid/output.csv > output1.csv")
+custom_headers = ['%EOF','/Producer','/ProcSet','/ID','/S','/CreationDate','/Font','/XObject','/Widget','/FontDescriptor','/Rect','/ModDate','/Info','/XML','dict_start','dict_end','comments','custom_metadata','metadata_stream','page_rotation']
+with open(os.path.relpath("output2.csv"), 'w', encoding='UTF8') as output:
+        output.write(','.join(custom_headers))
+
+        print("\n\n\nExtracting Custom headers!!!\n\n\n")
+        t0 = time.time()
+
+        for j in os.listdir(path):
+                f = path + "/" + j
+                # if not j.lower().endswith('.pdf'):
+                #     continue
+                try: 
+                       doc = fitz.open(f)
+                except:
+                       continue
+
+                out = utils.pdfcust(f)
+                out = list(out.values())
+                out = ','.join(str(o) for o in out)
+                output.write("\n" + out)
+        
+        t1 = time.time()
+        print("\nDuration: %.2f s.\n" % (t1-t0))
+       
+
+print("Finished extracting custom features!!!")
+# os.system("paste result.csv pdfid/output.csv > output1.csv")
+# os.system("paste output1.csv output2.csv > output.csv")
+
+df1 = pd.read_csv("result.csv")
+df2 = pd.read_csv("pdfid/output.csv")
+df3 = pd.read_csv("output2.csv")
+
+combined_df = pd.concat([df1, df2, df3], axis=1)
+
+combined_df.to_csv("output.csv", index=False)
+
 os.remove("pdfid/output.csv")
+os.remove("output2.csv")
 os.remove("result.csv")
 
 
