@@ -24,8 +24,8 @@ do
 
     csv_directory="./Extracts/Benign"
     csv_name="$benign_placeholder$i.csv"
-    cp output1.csv $csv_name
-    rm output1.csv
+    cp output.csv $csv_name
+    rm output.csv
     mv $csv_name $csv_directory
 done
 echo
@@ -47,12 +47,105 @@ do
 
     csv_directory="./Extracts/Malicious"
     csv_name="$malicious1_placeholder$i.csv"
-    cp output1.csv $csv_name
-    rm output1.csv
+    cp output.csv $csv_name
+    rm output.csv
     mv $csv_name $csv_directory
 done
 echo
 echo "Malicious Files extraction done!"
+echo
+echo "========================="
+echo
+
+echo
+echo "========================="
+echo
+echo "Downloading GOVDocs dataset..."
+echo
+mkdir -p "../Dataset/GOVDocs"
+for i in {000..399}
+do
+    aria2c -x 16 --dir="../Dataset/GOVDocs" "https://digitalcorpora.s3.amazonaws.com/corpora/files/govdocs1/zipfiles/$i.zip"
+done
+echo
+echo "Downloading GOVDocs complete!"
+echo
+echo "========================="
+echo
+
+echo
+echo "========================="
+echo
+echo "Extracting zip file..."
+echo
+unzip "../Dataset/GOVDocs/*.zip" -d "../Dataset/GOVDocs"
+rm "../Dataset/GOVDocs/*.zip"
+echo
+echo "Extraction complete!" 
+echo
+echo "========================="
+echo
+
+echo
+echo "========================="
+echo
+echo "Cleaning GOVDocs Files"
+echo
+for i in {000..399}
+do
+    result="../Dataset/GOVDocs/$i"
+    find "$result" -type f ! -name "*.pdf" -delete
+done
+echo
+echo "========================="
+echo
+echo "Cleaning done!"
+
+echo
+echo "========================="
+echo
+echo "Starting GOVDocs Files extraction"
+echo
+for i in {000..399}
+do
+    result="../Dataset/GOVDocs/$i"
+    python3 pdf_feature_extractor.py $result
+
+    csv_directory="./Extracts/GOVDocs"
+    mkdir -p $csv_directory
+    csv_name="GOVDoc$i.csv"
+    cp output.csv $csv_name
+    rm output.csv
+    mv $csv_name $csv_directory
+done
+echo
+echo "GOVDocs Files extraction done!" 
+echo
+echo "========================="
+echo
+
+echo
+echo "========================="
+echo
+echo "Starting VirusShare Files extraction"
+echo
+original="../Dataset/VirusShare_PDF"
+result="../Dataset/VirusShare_60000"
+mkdir -p $result
+ls $original | head -n 60000 | while read filename; do
+      mv $original/$filename $result
+      echo $filename
+done
+python3 pdf_feature_extractor.py $result
+
+csv_directory="./Extracts/VirusShare"
+mkdir -p $csv_directory
+csv_name="VirusShare.csv"
+cp output.csv $csv_name
+rm output.csv
+mv $csv_name $csv_directory
+echo
+echo "VirusShare Files extraction done!"
 echo
 echo "========================="
 echo
