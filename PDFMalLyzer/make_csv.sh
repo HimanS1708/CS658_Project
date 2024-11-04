@@ -63,7 +63,7 @@ echo
 echo "Downloading GOVDocs dataset..."
 echo
 mkdir -p "../Dataset/GOVDocs"
-for i in {000..399}
+for i in {300..399}
 do
     aria2c -x 16 --dir="../Dataset/GOVDocs" "https://digitalcorpora.s3.amazonaws.com/corpora/files/govdocs1/zipfiles/$i.zip"
 done
@@ -91,7 +91,7 @@ echo "========================="
 echo
 echo "Cleaning GOVDocs Files"
 echo
-for i in {000..399}
+for i in {300..399}
 do
     result="../Dataset/GOVDocs/$i"
     find "$result" -type f ! -name "*.pdf" -delete
@@ -106,7 +106,7 @@ echo "========================="
 echo
 echo "Starting GOVDocs Files extraction"
 echo
-for i in {000..399}
+for i in {300..399}
 do
     result="../Dataset/GOVDocs/$i"
     python3 pdf_feature_extractor.py $result

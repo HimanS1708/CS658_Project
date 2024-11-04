@@ -196,56 +196,56 @@ class PDFFeatureExtractor:
         features['comments'] = len(re.findall(b'%[^\n]*\n', self.raw_content))
 
         # File metadata
-        try:
-            with open(self.pdf_path, 'rb') as file:
-                pdf_reader = PyPDF2.PdfReader(file)
-                # print(pdf_reader)
+        # try:
+        #     with open(self.pdf_path, 'rb') as file:
+        #         pdf_reader = PyPDF2.PdfReader(file)
+        #         # print(pdf_reader)
                 
-                # features['page_count'] = len(pdf_reader.pages)
-                metadata = pdf_reader.metadata
-                features['custom_metadata'] = 'yes' if metadata and len(metadata)>0 else 'no'
+        #         # features['page_count'] = len(pdf_reader.pages)
+        #         metadata = pdf_reader.metadata
+        #         features['custom_metadata'] = 'yes' if metadata and len(metadata)>0 else 'no'
 
-                try:
-                    if hasattr(pdf_reader, 'trailer'):
-                        features['metadata_stream'] = 'yes' if pdf_reader.trailer.get('/Metadata') else 'no'
-                    else:
-                        features['metadata_stream'] = 'no'
-                except:
-                    features['metadata_stream'] = 'no'
-                # features['file_size_kb'] = self.pdf_size_kb
-                # features['pdf_version'] = self._get_pdf_version()
+        #         try:
+        #             if hasattr(pdf_reader, 'trailer'):
+        #                 features['metadata_stream'] = 'yes' if pdf_reader.trailer.get('/Metadata') else 'no'
+        #             else:
+        #                 features['metadata_stream'] = 'no'
+        #         except:
+        #             features['metadata_stream'] = 'no'
+        #         # features['file_size_kb'] = self.pdf_size_kb
+        #         # features['pdf_version'] = self._get_pdf_version()
                 
-                # Check for forms
-                # features['has_acroform'] = hasattr(pdf_reader, 'acroform')
+        #         # Check for forms
+        #         # features['has_acroform'] = hasattr(pdf_reader, 'acroform')
                 
-                # Check for XFA forms
-                # if features['has_acroform'] and pdf_reader.acroform:
-                #     features['form_type'] = 'XFA' if '/XFA' in str(pdf_reader.acroform) else 'AcroForm'
-                # else:
-                #     features['form_type'] = 'none'
+        #         # Check for XFA forms
+        #         # if features['has_acroform'] and pdf_reader.acroform:
+        #         #     features['form_type'] = 'XFA' if '/XFA' in str(pdf_reader.acroform) else 'AcroForm'
+        #         # else:
+        #         #     features['form_type'] = 'none'
                 
-                # Get first page size
-                if len(pdf_reader.pages) > 0:
-                    page = pdf_reader.pages[0]
-                #     if '/MediaBox' in page:
-                #         mediabox = page['/MediaBox']
-                #         width, height = float(mediabox[2]), float(mediabox[3])
-                #         features['page_size'] = f"{width}x{height}"
-                #     else:
-                #         features['page_size'] = "unknown"
+        #         # Get first page size
+        #         if len(pdf_reader.pages) > 0:
+        #             page = pdf_reader.pages[0]
+        #         #     if '/MediaBox' in page:
+        #         #         mediabox = page['/MediaBox']
+        #         #         width, height = float(mediabox[2]), float(mediabox[3])
+        #         #         features['page_size'] = f"{width}x{height}"
+        #         #     else:
+        #         #         features['page_size'] = "unknown"
                     
-                #     # Page rotation
-                    features['page_rotation'] = page.get('/Rotate', 0)
+        #         #     # Page rotation
+        #             features['page_rotation'] = page.get('/Rotate', 0)
                 
-        except Exception as e:
-            print(f"Warning: Error extracting PyPDF2 features: {str(e)}")
-            features.update({
-                'custom_metada': 'no',
-                'metadata_stream': 'no',
-                # 'form_type': 'unknown',
-                # 'page_size': 'unknown',
-                'page_rotation': 0
-            })
+        # except Exception as e:
+        #     print(f"Warning: Error extracting PyPDF2 features: {str(e)}")
+        #     features.update({
+        #         'custom_metada': 'no',
+        #         'metadata_stream': 'no',
+        #         # 'form_type': 'unknown',
+        #         # 'page_size': 'unknown',
+        #         'page_rotation': 0
+        #     })
 
         return features
 
