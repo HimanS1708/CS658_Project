@@ -23,15 +23,17 @@ print("CSV files combined successfully into malicious.csv")
 
 benign = pd.read_csv('benign.csv')
 malicious = pd.read_csv('malicious.csv')
-gov = pd.read_csv('../PDFMalLyzer/Extracts/GOVDocs/GOVDocs_300_to_399.csv')
+gov1 = pd.read_csv('../PDFMalLyzer/Extracts/GOVDocs/GOVDocs_300_to_399.csv')
+gov2 = pd.read_csv('../PDFMalLyzer/Extracts/GOVDocs/GOVDocs_011_to_099.csv')
 vs = pd.read_csv('../PDFMalLyzer/Extracts/VirusShare/VirusShare.csv')
 
 benign['Malicious'] = 'No'
-gov['Malicious'] = 'No'
+gov1['Malicious'] = 'No'
+gov2['Malicious'] = 'No'
 malicious['Malicious'] = 'Yes'
 vs['Malicious'] = 'Yes'
 
-combined_csv = pd.concat([benign, malicious, gov, vs])
+combined_csv = pd.concat([benign, malicious, gov1, gov2, vs])
 
 combined_csv = combined_csv.sample(frac=1).reset_index(drop=True)
 
