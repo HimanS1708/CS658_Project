@@ -30,7 +30,7 @@ For feature extraction from the PDFs, we used the [PDFMalLyzer](https://github.c
 | Write_ups       | Contains the write ups that were to be submitted for the project |
 
 ## Models 
-A number of classifers and their combinations using stacking model was explored on CIC dataset as well as on enhanced dataset. Following are the highlights of the same:-
+A number of classifers and their combinations using stacking model were explored on CIC dataset as well as on enhanced dataset. Following are the highlights of the same:-
 
 1. Created a stacking classifier model with MLP, RandomForest and SVM as Base learners and a Logistic Regression model as Meta Learner. However, the stacking classifier model was taking a long execution time on enhanced dataset.
 
