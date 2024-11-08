@@ -23,9 +23,10 @@ For feature extraction from the PDFs, we used the [PDFMalLyzer](https://github.c
 | PDFMalLyzer     | Contains the corrected feature extractor tool for extracting features from a PDF file |
 | Write_ups       | Contains the write ups that were to be submitted for the project |
 
-## Models
+## Models 
+A number of classifers and their combinations in stacking model was explored on CIC dataset as well as on enhanced dataset. Following are the highlights of the same:-
 
-Created a stacking classifier model with MLP, RandomForest and SVM as Base learners and a Logistic Regression model as Meta Learner.
+1. Created a stacking classifier model with MLP, RandomForest and SVM as Base learners and a Logistic Regression model as Meta Learner. However, the stacking classifier model was taking a long execution time on enhanced dataset.
 
 Hyperparameters used -
 
@@ -34,6 +35,8 @@ Hyperparameters used -
 * SVC - C=100, kernel='rbf', gamma='scale', probability=True, random_state=42
 * LogisticRegression - random_state=42
 
+2. The XGBoost Classifier was explored and it performed exceedingly well for all combination of features and also on the MalwareBazaar dataset, which is the most updated set of malicious data
+available on open source
 ## Team
 
 Himanshu Shekhar (220454)
