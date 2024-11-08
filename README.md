@@ -11,7 +11,7 @@ Available [here](http://205.174.165.80/CICDataset/CIC-EvasivePDF2022/Dataset/): 
 
 ## Feature Extraction
 
-For feature extraction from the PDFs, we used the [PDFMalLyzer](https://github.com/ahlashkari/PDFMalLyzer) tool. This tool is very outdated and also produces incorrect results for the given dataset. The code was updated and the required dependencies are also provided in the directory. 
+For feature extraction from the PDFs, we used the [PDFMalLyzer](https://github.com/ahlashkari/PDFMalLyzer) tool. This tool is very outdated and also produces incorrect results for the given dataset. The code was updated and the required dependencies are also provided in the directory. SHAP used for further feature engineering, SHAP (SHapley Additive exPlanations) is a popular method for explaining individual predictions of machine learning models. It’s based on Shapley values from cooperative game theory, where the idea is to fairly distribute the “payout” (in this case, the prediction) among features based on their contributions to the final prediction. Shapley values assign a fair value to each feature based on its contribution to the model's output. They measure each feature’s contribution by considering all possible combinations of features, which leads to more robust and reliable explanations
 
 ## Repository Structure
 
