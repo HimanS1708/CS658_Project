@@ -1,13 +1,19 @@
 # CS658 Project
 
-This is the project repository of Group 5 for the course CS658. We are working on the **CIC-Evasive-PDFMal2022** dataset. Our project idea is inspired by the paper [“PDF Malware Detection Based on Stacking Learning”](https://pdfs.semanticscholar.org/c4e6/1e9545951bf4e7dbefd7796b6f7f050a75f6.pdf), The International Conference on Information Systems Security and Privacy, February 2022. The goal of this project is to update the dataset with data post 2022 and review the ML/DL model used and try out modern techniques for classification. A thorough analysis of the existing dataset and model has been carried out to identify the limitations and finding the innovative ways to overcome the same. 
+This is the project repository of Group 5 for the course CS658. We are working on the **CIC-Evasive-PDFMal2022** dataset. Our project idea is inspired by the paper [“PDF Malware Detection Based on Stacking Learning”](https://pdfs.semanticscholar.org/c4e6/1e9545951bf4e7dbefd7796b6f7f050a75f6.pdf), The International Conference on Information Systems Security and Privacy, February 2022. The goal of this project is to update the dataset with data post 2022 and review the ML/DL model used and try out modern techniques for classification. A thorough analysis of the existing dataset and model has been carried out to identify the limitations and finding the innovative ways to overcome the same. The following three novel ideas have been implemented in this project:-
+1. Enhanced Dataset
+2. Enhanced Feature set
+3. Implementation of SHAP (SHapley Additive exPlanations)
 
 ## PDF Dataset
 
-Available [here](http://205.174.165.80/CICDataset/CIC-EvasivePDF2022/Dataset/): 9107 Benign files and 21721 Malicious files. In addition to this existing dataset from CIC Website, we have added a diverse dataset obtained from VirusShare, GOVDocs, PDFRep, VirusTotal etc. The dataset contains equal proportion of malicious and benign PDF files making a balanced and robust set of data to test and validate our improved version of Model. The following three novel idesa have been implemented in this project:-
-    1. Enhanced Dataset
-    2. Enhanced Feature set
-    3. Implementation of SHAP (SHapley Additive exPlanations)
+Available [here](http://205.174.165.80/CICDataset/CIC-EvasivePDF2022/Dataset/): 9107 Benign files and 21721 Malicious files. 
+
+In addition to this existing dataset from CIC Website, we have added a diverse dataset obtained from VirusShare, GOVDocs, MalwareBazaar etc. 
+
+Available [here](https://www.dropbox.com/scl/fo/e8z8d2i6y26nkdfkdtk64/h?rlkey=391h2dq0r70dxilhifvl6zlfj&e=1&dl=0): VirusShare Data
+
+The training dataset contains equal proportion of malicious and benign PDF files making a balanced and robust set of data to test and validate our improved version of Model. 
 
 ## Feature Extraction
 
@@ -28,14 +34,20 @@ A number of classifers and their combinations using stacking model was explored 
 
 1. Created a stacking classifier model with MLP, RandomForest and SVM as Base learners and a Logistic Regression model as Meta Learner. However, the stacking classifier model was taking a long execution time on enhanced dataset.
 
-Hyperparameters used -
+    Hyperparameters used -
 
-* RandomForestClassifier - n_estimators=200, max_depth=20, min_samples_leaf=1, min_samples_split=2, random_state=42
-* MLPClassifier - hidden_layer_sizes=(100,), max_iter=1000, activation='tanh', learning_rate_init=0.001, random_state=42
-* SVC - C=100, kernel='rbf', gamma='scale', probability=True, random_state=42
-* LogisticRegression - random_state=42
+    * RandomForestClassifier - n_estimators=200, max_depth=20, min_samples_leaf=1, min_samples_split=2, random_state=42
+    * MLPClassifier - hidden_layer_sizes=(100,), max_iter=1000, activation='tanh', learning_rate_init=0.001, random_state=42
+    * SVC - C=100, kernel='rbf', gamma='scale', probability=True, random_state=42
+    * LogisticRegression - random_state=42
 
-2. The XGBoost Classifier was explored and it performed exceedingly well for all combination of features and also on the MalwareBazaar dataset, which is the most updated set of malicious data available on open source
+
+2. The XGBoost Classifier was explored and it performed exceedingly well for all combination of features and also on the MalwareBazaar dataset, which is the most updated set of malicious data available on open source.
+
+    Optuna analysis-
+
+    Best parameters: {'n_estimators': 973, 'max_depth': 4, 'learning_rate': 0.29551846768638934, 'subsample': 0.6307508700115003, 'colsample_bytree': 0.9060368374784977, 'min_child_weight': 6}
+
 ## Team
 
 Himanshu Shekhar (220454)
